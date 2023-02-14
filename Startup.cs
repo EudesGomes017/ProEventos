@@ -1,18 +1,12 @@
 using Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProEventos
 {
@@ -37,6 +31,7 @@ namespace ProEventos
 
 
             services.AddControllers();
+            services.AddCors(); //habilitando os cors par ao frontAnd
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProEventos", Version = "v1" });
@@ -58,6 +53,12 @@ namespace ProEventos
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors
+            (x => x.AllowAnyHeader()//dado qualque header da requisição https
+             .AllowAnyMethod() // vindo de qualquer verbos do metodos 
+             .AllowAnyOrigin() // vindo de qualquer origin obs: por enquanto vamos permitir               
+            );
 
             app.UseEndpoints(endpoints =>
             {
