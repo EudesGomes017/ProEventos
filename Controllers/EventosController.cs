@@ -15,19 +15,19 @@ namespace ProEventos.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class EventoController : ControllerBase
+    public class EventosController : ControllerBase
     {
 
 
         private readonly DataContext _context;
 
-        public EventoController(DataContext context)
+        public EventosController(DataContext context)
         {
             _context = context;
         }
-        //public IEnumerable<Evento> _evento = new Evento[]
+        //public IEnumerable<Eventos> _evento = new Eventos[]
         //{
-        //        new Evento()
+        //        new Eventos()
         //        {
 
         //            EventoId = 1,
@@ -37,7 +37,7 @@ namespace ProEventos.Controllers
         //            QtdPessoas = 250,
         //            DataEvento = DateTime.Now.AddDays(2).ToString("dd/MM/yyyy")
         //        },
-        //        new Evento()
+        //        new Eventos()
         //        {
 
         //            EventoId = 2,
