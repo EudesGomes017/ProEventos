@@ -1,14 +1,9 @@
-﻿using Data.Context;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Models.Models;
-using System;
+using Persistence.Context;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProEventos.Controllers
 {
@@ -19,9 +14,9 @@ namespace ProEventos.Controllers
     {
 
 
-        private readonly DataContext _context;
+        private readonly ProEventosContext _context;
 
-        public EventosController(DataContext context)
+        public EventosController(ProEventosContext context)
         {
             _context = context;
         }
@@ -58,7 +53,7 @@ namespace ProEventos.Controllers
         [HttpGet("{id}")]
         public IEnumerable<Evento> GetById(int id)
         {
-            return _context.Eventos.Where(Evento => Evento.EventoId == id);
+            return _context.Eventos.Where(Evento => Evento.Id == id);
         }
 
         [HttpPost]
