@@ -1,4 +1,3 @@
-using Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Persistence.Context;
 using System;
 
 namespace ProEventos
@@ -24,7 +24,7 @@ namespace ProEventos
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<DataContext> //adicionando na nossa startup  do sistema nosso Contexto
+            services.AddDbContext<ProEventosContext> //adicionando na nossa startup  do sistema nosso Contexto
            (
                context => context.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")) //conexeção string
            );
