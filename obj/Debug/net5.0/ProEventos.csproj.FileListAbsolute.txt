@@ -48,3 +48,4 @@ C:\Users\steel\ProEventosNew\ProEventos\obj\Debug\net5.0\staticwebassets\msbuild
 C:\Users\steel\ProEventosNew\ProEventos\obj\Debug\net5.0\staticwebassets\msbuild.buildTransitive.ProEventos.props
 C:\Users\steel\ProEventosNew\ProEventos\bin\Debug\net5.0\Persistence.dll
 C:\Users\steel\ProEventosNew\ProEventos\bin\Debug\net5.0\Persistence.pdb
+C:\Users\steel\ProEventosNew\ProEventos\obj\Debug\net5.0\ProEventos.MvcApplicationPartsAssemblyInfo.cs
