@@ -6,6 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Persistence.Context;
+using Persistence.PersistenceServices;
+using Persistence.PerssitenceInterfaces;
+using ProEventos.Interfaces.Interfaces;
+using ProEventosApplicationServices.Services;
 using System;
 
 namespace ProEventos
@@ -30,7 +34,16 @@ namespace ProEventos
            );
 
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
+
+            // add interfaces e classes para injeção de dependencia 
+            services.AddScoped<IEventosServices, EventoService>();
+            services.AddScoped<IGeralPersistence, GeralPersistenceServices>();
+            services.AddScoped<IEventoPersistence, EventoPersistenceServices>();
+
             services.AddCors(); //habilitando os cors par ao frontAnd
             services.AddSwaggerGen(c =>
             {
