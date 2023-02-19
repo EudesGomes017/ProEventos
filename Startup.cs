@@ -41,8 +41,8 @@ namespace ProEventos
 
             // add interfaces e classes para injeção de dependencia 
             services.AddScoped<IEventosServices, EventoService>();
-            services.AddScoped<IGeralPersistence, GeralPersistenceServices>();
-            services.AddScoped<IEventoPersistence, EventoPersistenceServices>();
+            services.AddScoped<IGeralPersistenceServices, GeralPersistenceServices>();
+            services.AddScoped<IEventoPersistenceServices, EventoPersistenceServices>();
 
             services.AddCors(); //habilitando os cors par ao frontAnd
             services.AddSwaggerGen(c =>

@@ -64,7 +64,7 @@ namespace ProEventos.Controllers
             {
 
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar evento. Eroo: {e.Message}");
+                    $"Erro ao tentar recuperar evento. Erro: {e.Message}");
             }
         }
 
@@ -75,7 +75,7 @@ namespace ProEventos.Controllers
             try
             {
                 var eventos = await _eventosServices.GetAllEventosByTemaAsync(tema, true); //retorna sempre os participantes
-                if (eventos == null)
+                if (eventos == null) return NotFound("Nenhum evento por Temas encontrados. ");
                 {
                     return NotFound("Eventos por Tema não encontrado"); //NotFound() status code 404
                 }
@@ -96,7 +96,7 @@ namespace ProEventos.Controllers
             try
             {
                 var evento = await _eventosServices.GetEventoByIdAsync(id, true); //retorna sempre os participantes
-                if (evento == null)
+                if (evento == null) return NotFound("Nenhum evento por Id encontrado. ");
                 {
                     return NotFound("Nenhum evento encontrado por Id. "); //NotFound() status code 404
                 }
@@ -116,9 +116,7 @@ namespace ProEventos.Controllers
             try
             {
                 var evento = await _eventosServices.AddEventos(model);
-                {
-                    return BadRequest(" Erro ao tentar adicionar eventos ");
-                }
+                if (evento == null) return BadRequest(" Erro ao tentar adicionar eventos ");
 
                 return Ok(evento); //Ok status code 200
             }
@@ -136,9 +134,7 @@ namespace ProEventos.Controllers
             try
             {
                 var evento = await _eventosServices.UpDateEvento(id, model);
-                {
-                    return BadRequest(" Erro ao tentar adicionar eventos ");
-                }
+                if (evento == null) return BadRequest(" Erro ao tentar atualizar eventos ");
 
                 return Ok(evento); //Ok status code 200
             }
