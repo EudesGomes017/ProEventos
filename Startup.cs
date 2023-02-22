@@ -8,9 +8,10 @@ using Microsoft.OpenApi.Models;
 using Persistence.Context;
 using Persistence.PersistenceServices;
 using Persistence.PerssitenceInterfaces;
-using ProEventos.Interfaces.Interfaces;
 using ProEventosApplicationServices.Services;
 using System;
+using AutoMapper;
+using ProEventosApplicationServices.Interfaces;
 
 namespace ProEventos
 {
@@ -33,11 +34,12 @@ namespace ProEventos
                context => context.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")) //conexeção string
            );
 
-
             services.AddControllers()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling =
                     Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // injetamos a capacidade do meu servico de trabalhar com automapp
 
             // add interfaces e classes para injeção de dependencia 
             services.AddScoped<IEventosServices, EventoService>();

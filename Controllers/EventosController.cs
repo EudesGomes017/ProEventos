@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Models.Models;
-using Persistence.Context;
-using ProEventos.Interfaces.Interfaces;
+using ProEventosApplicationServices.Dtos;
+using ProEventosApplicationServices.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProEventos.Controllers
@@ -47,7 +44,7 @@ namespace ProEventos.Controllers
         //            DataEvento = DateTime.Now.AddDays(3).ToString("dd/MM/yyyy")
         //        }
         //    };
-      
+
         [HttpGet]
         public async Task<IActionResult> Get() //IActionResult permit retorna os status codes do http
         {
@@ -56,8 +53,9 @@ namespace ProEventos.Controllers
                 var eventos = await _eventosServices.GetAllEventosAsync(true); //retorna sempre os participantes
                 if (eventos == null)
                 {
-                    return NotFound("Nenhum evento encontrado. "); //NotFound() status code 404
+                    return NoContent(); //Conteudo não foi encontrado
                 }
+
                 return Ok(eventos); //Ok status code 200
             }
             catch (Exception e)
@@ -68,7 +66,6 @@ namespace ProEventos.Controllers
             }
         }
 
-
         [HttpGet("{tema}/tema")]
         public async Task<IActionResult> GetByTema(string tema) //IActionResult permit retorna os status codes do http
         {
@@ -77,7 +74,7 @@ namespace ProEventos.Controllers
                 var eventos = await _eventosServices.GetAllEventosByTemaAsync(tema, true); //retorna sempre os participantes
                 if (eventos == null) return NotFound("Nenhum evento por Temas encontrados. ");
                 {
-                    return NotFound("Eventos por Tema não encontrado"); //NotFound() status code 404
+                    return NoContent(); //Conteudo não foi encontrado
                 }
                 return Ok(eventos); //Ok status code 200
             }
@@ -98,7 +95,7 @@ namespace ProEventos.Controllers
                 var evento = await _eventosServices.GetEventoByIdAsync(id, true); //retorna sempre os participantes
                 if (evento == null) return NotFound("Nenhum evento por Id encontrado. ");
                 {
-                    return NotFound("Nenhum evento encontrado por Id. "); //NotFound() status code 404
+                    return NoContent(); //Conteudo não foi encontrado
                 }
                 return Ok(evento); //Ok status code 200
             }
@@ -111,12 +108,12 @@ namespace ProEventos.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Evento model)
+        public async Task<IActionResult> Post(EventoDto model)
         {
             try
             {
                 var evento = await _eventosServices.AddEventos(model);
-                if (evento == null) return BadRequest(" Erro ao tentar adicionar eventos ");
+                if (evento == null) return NoContent(); //Conteudo não foi encontrado;
 
                 return Ok(evento); //Ok status code 200
             }
@@ -129,12 +126,12 @@ namespace ProEventos.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Evento model)
+        public async Task<IActionResult> Put(int id, EventoDto model)
         {
             try
             {
                 var evento = await _eventosServices.UpDateEvento(id, model);
-                if (evento == null) return BadRequest(" Erro ao tentar atualizar eventos ");
+                if (evento == null) return NoContent(); //Conteudo não foi encontrado
 
                 return Ok(evento); //Ok status code 200
             }
@@ -142,7 +139,7 @@ namespace ProEventos.Controllers
             {
 
                 return this.StatusCode(StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar atualizar evento. Eroo: {e.Message}");
+                    $"Erro ao tentar atualizar evento. Erro: {e.Message}");
             }
         }
 
@@ -151,13 +148,15 @@ namespace ProEventos.Controllers
         {
             try
             {
-              
-                if ( await _eventosServices.DeleteEvento(id))
+                var eventos = await _eventosServices.GetAllEventosAsync(true); //retorna sempre os participantes
+                if (eventos == null)
                 {
-                    return Ok("Deletedo com sucesso! ");
+                    return NoContent(); //Conteudo não foi encontrado
                 }
-                else  return BadRequest("Evento não deletado");
-             
+
+                return await _eventosServices.DeleteEvento(id) ? Ok("Deletedo com sucesso! ") :
+                           throw new Exception("Ocorreu um problema não específico ao tentar deletar o Evento! ");
+
             }
             catch (Exception e)
             {
