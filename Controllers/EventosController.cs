@@ -15,9 +15,9 @@ namespace ProEventos.Controllers
     {
 
 
-        private readonly IEventosServices _eventosServices;
+        private readonly IEventoServices _eventosServices;
 
-        public EventosController(IEventosServices eventosServices)
+        public EventosController(IEventoServices eventosServices)
         {
             _eventosServices = eventosServices;
         }
@@ -86,7 +86,6 @@ namespace ProEventos.Controllers
             }
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -108,7 +107,7 @@ namespace ProEventos.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(EventoDto model)
+        public async Task<IActionResult> Post(LoteDto model)
         {
             try
             {
@@ -126,7 +125,7 @@ namespace ProEventos.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, EventoDto model)
+        public async Task<IActionResult> Put(int id, LoteDto model)
         {
             try
             {

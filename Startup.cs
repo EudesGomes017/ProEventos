@@ -42,7 +42,7 @@ namespace ProEventos
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // injetamos a capacidade do meu servico de trabalhar com automapp
 
             // add interfaces e classes para injeção de dependencia 
-            services.AddScoped<IEventosServices, EventoService>();
+            services.AddScoped<IEventoServices, EventoService>();
             services.AddScoped<IGeralPersistenceServices, GeralPersistenceServices>();
             services.AddScoped<IEventoPersistenceServices, EventoPersistenceServices>();
 
